@@ -129,26 +129,28 @@ $$R_{1,t} = \beta_1 + \beta_{1,F_1}F_{1,t} + \beta_{1,F_2}F_{2,t} + ... \beta_{1
 	
 $$R_{2,t} = \beta_2 + \beta_{2,F_1}F_{1,t} + \beta_{2,F_2}F_{2,t} + ... \beta_{2,F_k}F_{k,t} + \epsilon_{2,t}$$
 
-$$.\\$$
+$$.$$
 
-$$.\\$$
+$$.$$
 
-$$.\\$$
+$$.$$
 
 $$R_{N,t} = \beta_N + \beta_{N,F_1}F_{1,t} + \beta_{N,F_2}F_{2,t} + ... \beta_{N,F_k}F_{k,t} + \epsilon_{N,t}$$
 
 
 [2단계] 1단계 에서 구한 베타($\hat{\beta}$})를 독립변수로 넣고 각 시점의 포트폴리오 수익률($R_{i,t}(i=1,....n$)을 종속변수로 하는 회귀분석을 수행합니다.
 
-$$
-    R_{i,1} = \lambda_{1,0} + \lambda_{1,1}\hat{\beta}_{i,F_1} + \lambda_{1,2}\hat{\beta}_{i,F_2} + ...\lambda_{1,K}\hat{\beta}_{i,F_K} + \epsilon_{i,1}\\    
-    R_{i,2} = \lambda_{2,0} + \lambda_{2,1}\hat{\beta}_{i,F_1} + \lambda_{2,2}\hat{\beta}_{i,F_2} + ...\lambda_{2,K}\hat{\beta}_{i,F_K} + \epsilon_{i,2}\\
-    .\\
-    .\\
-    .\\    
-    R_{i,T} = \lambda_{T,0} + \lambda_{T,1}\hat{\beta}_{i,F_1} + \lambda_{T,2}\hat{\beta}_{T,F_2} + ...\lambda_{T,K}\hat{\beta}_{i,F_K} + \epsilon_{T,2}
+$$R_{i,1} = \lambda_{1,0} + \lambda_{1,1}\hat{\beta}_{i,F_1} + \lambda_{1,2}\hat{\beta}_{i,F_2} + ...\lambda_{1,K}\hat{\beta}_{i,F_K} + \epsilon_{i,1}$$
 
-$$
+$$R_{i,2} = \lambda_{2,0} + \lambda_{2,1}\hat{\beta}_{i,F_1} + \lambda_{2,2}\hat{\beta}_{i,F_2} + ...\lambda_{2,K}\hat{\beta}_{i,F_K} + \epsilon_{i,2}$$
+
+$$.$$
+
+$$.$$
+
+$$.$$
+
+$$R_{i,T} = \lambda_{T,0} + \lambda_{T,1}\hat{\beta}_{i,F_1} + \lambda_{T,2}\hat{\beta}_{T,F_2} + ...\lambda_{T,K}\hat{\beta}_{i,F_K} + \epsilon_{T,2}$$
 
 1단계는 N개의 주식에 각각 시계열 회귀분석을 수행하는 것이고 2단계는 T개의 시점 모든 주식에 대하여 회귀분석을 수행하는 것입니다. 2단계의 결과로 나오는 회귀계수 행렬 $\hat{\lambda}_{T\times K}$를 시간축 t에 대해 평균을 취한 각 팩터의 계수값을 각 팩터에 대한 최종적인 회귀계수 추정값으로 사용합니다. 여기서 $\hat{\lambda}_{t,k}$는 t 시점에서 팩터에 대한 리스크 프리미엄으로 해석됩니다.
 k번째 팩터에 대한 프리미엄은 $\hat{\lambda}_k=\frac{1}{T}\sum_{t=1}^T\hat{\lambda}_{t,k}$ 입니다. 
