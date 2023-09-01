@@ -104,6 +104,7 @@ r은 벡터이고 모든 주식들의 수익률을 뜻합니다. x는 최근의 
 가장 간단한 방법은 t-test입니다.  $t=\sqrt{T}\frac{m_{r_+}-m_{r_-}}{\sigma_{r_+-r_-}}$, 여기서 T는 데이터의 갯수를 의미하고 $m_{r_\pm}$는 평균 수익률을 의미하며 $\sigma_{r_+-r_-}$는 두 그룹 수익률차이의 표준편차를 뜻합니다. 이는 롱숏포트폴리오의 변동성을 뜻한다고 볼 수도 있습니다. 본 수치는 샤프비율과도 유사한 면이 있습니다. t값은 p-value로 변환됩니다. p-value는 가설이 주어졌을 때 데이터 샘플이 존재할 가능성입니다. 즉 우리가 알고자 하는 것은 데이터가 주어졌을 때 그 가설이 될 확률입니다.
 
 우리가 알고자 하는 것은 데이터가 주어졌을 때 그 가설이 될 확률이 필요합니다. 
+
 $$
 \text{p-value} = P[D|H]
 $$
@@ -142,20 +143,19 @@ $$.$$
 
 $$R_{N,t} = \beta_N + \beta_{N,F_1}F_{1,t} + \beta_{N,F_2}F_{2,t} + ... \beta_{N,F_k}F_{k,t} + \epsilon_{N,t}$$
 
-
 [2단계] 1단계 에서 구한 베타($\hat{\beta}$})를 독립변수로 넣고 각 시점의 포트폴리오 수익률($R_{i,t}(i=1,....n$)을 종속변수로 하는 회귀분석을 수행합니다.
 
-$$R_{i,1} = \lambda_{1,0} + \lambda_{1,1}\hat{\beta}_{i,F_1} + \lambda_{1,2}\hat{\beta}_{i,F_2} + ...\lambda_{1,K}\hat{\beta}_{i,F_K} + \epsilon_{i,1}$$
+$$R_{i,1} = \lambda_{1,0} + \lambda_{1,1}\beta_{i,F_1} + \lambda_{1,2}\beta_{i,F_2} + ...\lambda_{1,K}\beta_{i,F_K} + \epsilon_{i,1}$$
 
-$$R_{i,2} = \lambda_{2,0} + \lambda_{2,1}\hat{\beta}_{i,F_1} + \lambda_{2,2}\hat{\beta}_{i,F_2} + ...\lambda_{2,K}\hat{\beta}_{i,F_K} + \epsilon_{i,2}$$
-
-$$.$$
+$$R_{i,2} = \lambda_{2,0} + \lambda_{2,1}\beta_{i,F_1} + \lambda_{2,2}\beta_{i,F_2} + ...\lambda_{2,K}\beta_{i,F_K} + \epsilon_{i,2}$$
 
 $$.$$
 
 $$.$$
 
-$$R_{i,T} = \lambda_{T,0} + \lambda_{T,1}\hat{\beta}_{i,F_1} + \lambda_{T,2}\hat{\beta}_{T,F_2} + ...\lambda_{T,K}\hat{\beta}_{i,F_K} + \epsilon_{T,2}$$
+$$.$$
+
+$$R_{i,T} = \lambda_{T,0} + \lambda_{T,1}\beta_{i,F_1} + \lambda_{T,2}\beta_{T,F_2} + ...\lambda_{T,K}\beta_{i,F_K} + \epsilon_{T,2}$$
 
 1단계는 N개의 주식에 각각 시계열 회귀분석을 수행하는 것이고 2단계는 T개의 시점 모든 주식에 대하여 회귀분석을 수행하는 것입니다. 2단계의 결과로 나오는 회귀계수 행렬 $\hat{\lambda}_{T\times K}$를 시간축 t에 대해 평균을 취한 각 팩터의 계수값을 각 팩터에 대한 최종적인 회귀계수 추정값으로 사용합니다. 여기서 $\hat{\lambda}_{t,k}$는 t 시점에서 팩터에 대한 리스크 프리미엄으로 해석됩니다.
 k번째 팩터에 대한 프리미엄은 $\hat{\lambda}_k=\frac{1}{T}\sum_{t=1}^T\hat{\lambda}_{t,k}$ 입니다. 
