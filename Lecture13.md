@@ -88,14 +88,13 @@
 
 ### 데이터 전처리 ###
 
-머신러닝의 지도 학습에서는 특정 팩터가 어떻게 종속 변수, 즉 예측하고자 하는 목표 변수에 영향을 미치는지 알아보기 위해 데이터의 형태를 변형합니다. 
-변형방법은 목적에 따라 다양합니다.
+머신러닝의 지도 학습에서는 특정 팩터가 어떻게 종속 변수, 즉 예측하고자 하는 목표 변수에 영향을 미치는지 알아보기 위해 데이터의 형태를 변형합니다. 변형방법은 목적에 따라 다양합니다.
 
  하나의 특징 X만을 가지고 있고, Y=f(X)+error 형태의 모델을 찾고자 한다고 가정해 봅시다. 여기서 변수들은 모두 실수값입니다. 이때, 평균 제곱 오차, 즉 실제 값과 예측 값의 차이의 제곱의 평균을 최소화하는 함수 f는 '회귀 함수'라고 알려져 있습니다. 회귀분석이 그것입니다.
 
 이 함수는 f(x)=E[Y|X=x]로 표현됩니다.
 
-만약 종속변수 Y가 한 달 후의 수익률이고 예측 변수로 B/P와 R&D/MarketCap을 사용한다고 할 때 두 예측 변수는 '균일화' 되어야 이 회귀식의 예측력이 상승합니다.
+만약 종속변수 Y가 한 달 후의 수익률이고 예측 변수로 B/P와 R&D/MarketCap을 사용한다고 할 때 두 예측 변수는 '균일화' 되어야 이 회귀식의 예측력이 상승합니다. 예측변수의 숫자 단위가 다르기 때문입니다.
 어떻게 균일화 해서 사용할지는 사용하고자 하는 모델링 방법에 달려 있습니다.
 
 일단 데이터를 불러봅니다.
@@ -118,8 +117,9 @@ data_ml = pd.read_csv('data_ml.csv')
 
 **2) 이상치(oulier)**
 
-이상치 검출에 대한 여러 연구와 전문 서적이 존재합니다. 매우 정교한 방법들은 많은 노력을 필요로 합니다만 실무에서는 간단한 휴리스틱 방법들 정도가 사용됩니다.
-예를들어 가장 많이 사용하는 방법은 특정한 특성에 대해, 평균에서 표준편차의 m배 만큼 벗어난 데이터를 아웃라이어로 간주하는 것입니다. m은 일반적으로 3,5,10 중 하나의 값을 가집니다. 또는 가장 큰 값이 두번째로 큰 값의 m배 보다 크다면 그것 역시 아웃라이어로 분류합니다.
+이상치 검출에 대한 여러 연구와 전문 서적이 존재합니다. 
+매우 정교한 방법들은 많은 노력을 필요로 합니다만 실무에서는 간단한 휴리스틱 방법들 정도가 사용됩니다.
+예를들어 가장 많이 사용하는 방법은 특정한 특성에 대해, 평균에서 표준편차의 m배 만큼 벗어난 데이터를 아웃라이어로 간주하는 것입니다. m은 일반적으로 3,5,10 중 하나의 값을 가집니다. 또는 가장 큰 값이 두번째로 큰 값의 m배 보다 크다면 그것 역시 이상치로 분류합니다.
 
 ### 피처 엔지니어링(Feature Engineering)
 
@@ -131,11 +131,12 @@ data_ml = pd.read_csv('data_ml.csv')
 
 첫 번째 단계는 피처 선택입니다. 많은 수의 예측 변수들이 주어졌을 때 선택하는 간단한 방법은 다음과 같습니다.
 
-- 팩터들 간의 상관관계를 파악해서 (0.7이 일반적인 값) 높은 값이 없는지 확인하기
+- 입력팩터들 간의 상관관계를 파악해서 (0.7이 일반적인 값) 높은 값이 없는지 확인하기
 - 선형 회귀를 수행해서 유의하지 않은 변수들은 사용하지 않기
 - 팩터들에 클러스터링 분석을 수행하여 그중에서 대표적인 하나의 팩터만 유지하기
-
-이런 방법들 외에도 주성분 분석을 사용하여 주성분을 입력변수로 쓰는 경우도 있고 트리를 적합시켜서 중요도가 높은 피처들만 유지하게 하는 방법도 있습니다.
+- 주성분 분석을 사용해서 주성분을 입력 변수로 사용하기
+- 트리를 적합 시켜서 중요도가 높은 피처들만 유지하게 하기
+- 기타 등등
 
 #### 예측 변수의 스케일링
 
@@ -144,7 +145,7 @@ data_ml = pd.read_csv('data_ml.csv')
 - 일간 수익률은 대부분 100%보다 작다.
 - 주식의 변동성은 일발적으로 5%~80% 사이이다.
 - 시가 총액은 백만 단위 또는 10억 단위로 표시된다.
-- 재무값도 각자의 단위가 있다.
+- 재무값은 각자의 단위가 있다.
 - 재무비율은 불균일하게 분포될 수 있다.
 - Sentiment, Technical 팩터들도 그들만의 특성이 존재한다.
 
@@ -269,7 +270,7 @@ f_columns = [col for col in data.columns if col.startswith('f')]
 
 #결측치가 있는경우 해당 날짜에서 가장 작은 숫자를 입력한다.
 for col in f_columns:
-    data[col].fillna(data.groupby('date_')[col].transform('mean'), inplace=True)
+    data[col].fillna(data.groupby('date_')[col].transform('min'), inplace=True)
 
 # Apply Min-Max Scaling for f_columns for each date_ group
 data[f_columns] = data.groupby('date_')[f_columns].apply(min_max_scale_group)
@@ -471,7 +472,7 @@ f_columns = [col for col in data.columns if col.startswith('f')]
 
 #결측치가 있는경우 해당 날짜에서 가장 작은 숫자를 입력한다.
 for col in f_columns:
-    data[col].fillna(data.groupby('date_')[col].transform('mean'), inplace=True)
+    data[col].fillna(data.groupby('date_')[col].transform('min'), inplace=True)
 
 # Apply Min-Max Scaling for f_columns for each date_ group
 data[f_columns] = data.groupby('date_')[f_columns].apply(min_max_scale_group)
@@ -524,7 +525,7 @@ Classification Report:
 weighted avg       0.34      0.34      0.34     27201
 ```
 
-모델의 정확도는 34%로, 랜덤하게 선택한 경우(33.33%)보다 약간 더 높습니다. 각 클래스에 대한 정밀도, 재현율, F1-score도 비슷한 범위에 있습니다, 이는 모델이 각 클래스를 비슷하게 잘 분류하고 있음을 나타냅니다. 그러나 성능이 높다고는 어렵게 평가되며, 모델의 개선이 필요해 보입니다.
+모델의 정확도는 34%로, 랜덤하게 선택한 경우(33.33%)보다 약간 더 높습니다. 각 클래스에 대한 정밀도, 재현율, F1-score도 비슷한 범위에 있습니다, 이는 모델이 각 클래스를 비슷하게 잘 분류하고 있음을 나타냅니다. 그러나 성능이 높다고 보기에는 어렵습니다. 모델의 개선이 필요해 보입니다.
 
 투자전략의 관점에서 2015년까지 학습한 모델의 예측치를 사용해 보겠습니다.
 1로 분류되는 종목들의 수익률과 -1로 분류되는 종목들의 수익률을 비교 평가하여 2016년 이후 (out of sample) 포트폴리오 그룹별 수익률을 확인해 보겠습니다.
@@ -614,7 +615,7 @@ f_columns = [col for col in data.columns if col.startswith('f')]
 
 #결측치가 있는경우 해당 날짜에서 가장 작은 숫자를 입력한다.
 for col in f_columns:
-    data[col].fillna(data.groupby('date_')[col].transform('mean'), inplace=True)
+    data[col].fillna(data.groupby('date_')[col].transform('min'), inplace=True)
 
 # Apply Min-Max Scaling for f_columns for each date_ group
 data[f_columns] = data.groupby('date_')[f_columns].apply(min_max_scale_group)
@@ -694,7 +695,7 @@ XGBoost는 "eXtreme Gradient Boosting"의 약어로, 특히 대규모 데이터�
 
 XGBoost는 효율적인 알고리즘과 병렬 처리 덕분에 뛰어난 성능을 발휘하며, 많은 기계 학습 경쟁에서 우승한 모델을 생성했습니다.(Kaggle 최대 우승 모델)
 
-GBoost는 회귀, 분류, 순위 및 사용자 정의 예측 문제에 사용할 수 있으며, 다양한 종류의 목적 함수와 평가 기준을 지원합니다.
+XGBoost는 회귀, 분류, 순위 및 사용자 정의 예측 문제에 사용할 수 있으며, 다양한 종류의 목적 함수와 평가 기준을 지원합니다.
 
 XGBoost는 스파스 데이터와 매우 큰 데이터셋을 둘다 효율적으로 처리할 수 있습니다.
 
@@ -735,7 +736,7 @@ f_columns = [col for col in data.columns if col.startswith('f')]
 
 #결측치가 있는경우 해당 날짜에서 가장 작은 숫자를 입력한다.
 for col in f_columns:
-    data[col].fillna(data.groupby('date_')[col].transform('mean'), inplace=True)
+    data[col].fillna(data.groupby('date_')[col].transform('min'), inplace=True)
 
 # Apply Min-Max Scaling for f_columns for each date_ group
 data[f_columns] = data.groupby('date_')[f_columns].apply(min_max_scale_group)
@@ -923,7 +924,7 @@ f_columns = [col for col in data.columns if col.startswith('f')]
 
 #결측치가 있는경우 해당 날짜에서 가장 작은 숫자를 입력한다.
 for col in f_columns:
-    data[col].fillna(data.groupby('date_')[col].transform('mean'), inplace=True)
+    data[col].fillna(data.groupby('date_')[col].transform('min'), inplace=True)
 
 # Apply Min-Max Scaling for f_columns for each date_ group
 data[f_columns] = data.groupby('date_')[f_columns].apply(min_max_scale_group)
@@ -1010,4 +1011,3 @@ plt.show()
 
 오늘은 간단하게 머신러닝 모델들을 소개하고 사용하는 방법을 알아 봤습니다.
 다음시간에는 인공신경망과 앙상블 모델로 모델을 개선하는 과정을 진행해 보겠습니다.
-
